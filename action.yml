@@ -23,13 +23,11 @@ runs:
 
     - name: Sync repository (clone or pull)
       shell: bash
-      env:
-        GH_TOKEN: ${{ github.token }}
       run: |
         set -e
 
         # Use token-based URL for private access
-        REPO_URL="https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}"
+        REPO_URL="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
 
         if [ ! -d /home/runner/_work/platforms-cached/.git ]; then
           echo "Cloning fresh repo..."
