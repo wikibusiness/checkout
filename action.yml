@@ -1,0 +1,34 @@
+name: "Checkout"
+description: "Checkout repository with cache"
+runs:
+  using: composite
+  steps:
+    - name: Cache cloned repo
+      id: repo_cache
+      uses: wikibusiness/local-cache@v5
+      with:
+        path: /home/runner/_work/platforms-cached
+        base: /home/runner/cache
+        key: repo-${{ github.repository }}-v1
+        clean-key: repo
+
+    - name: Sync repository (clone or pull)
+      run: |
+        set -e
+
+        if [ ! -d /home/runner/_work/platforms/.git ]; then
+          echo "Cloning fresh repo..."
+          git clone --no-checkout https://github.com/${{ github.repository }} /home/runner/_work/platforms-cached
+        fi
+
+        cd /home/runner/_work/platforms-cached
+
+        echo "Fetching latest..."
+        git fetch origin
+
+        echo "Checking out correct commit..."
+        git checkout ${{ github.sha }}
+
+    - name: Copy repo into workspace
+      run: |
+        rsync -a --delete /home/runner/_work/platforms-cached/ "${{ github.workspace }}/"
