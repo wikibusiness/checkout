@@ -19,7 +19,7 @@ runs:
 
         if [ ! -d /home/runner/_work/platforms/.git ]; then
           echo "Cloning fresh repo..."
-          git clone --no-checkout https://github.com/${{ github.repository }} /home/runner/_work/platforms-cached
+          git clone https://github.com/${{ github.repository }} /home/runner/_work/platforms-cached
           echo "Done cloning."
         fi
 
