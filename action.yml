@@ -9,17 +9,8 @@ runs:
       with:
         path: /home/runner/_work/platforms-cached
         base: /home/runner/cache
-        key: repo-${{ github.repository }}-v1
+        key: repo-platforms-v1
         clean-key: repo
-
-    # - name: Determine correct commit SHA
-    #   id: get_sha
-    #   run: |
-    #     if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-    #       echo "sha=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
-    #     else
-    #       echo "sha=${{ github.sha }}" >> "$GITHUB_OUTPUT"
-    #     fi
 
     - name: Sync repository (clone or pull)
       shell: bash
