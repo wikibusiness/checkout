@@ -13,6 +13,7 @@ runs:
         clean-key: repo
 
     - name: Sync repository (clone or pull)
+      shell: bash
       run: |
         set -e
 
@@ -30,5 +31,6 @@ runs:
         git checkout ${{ github.sha }}
 
     - name: Copy repo into workspace
+      shell: bash
       run: |
         rsync -a --delete /home/runner/_work/platforms-cached/ "${{ github.workspace }}/"
